@@ -10,6 +10,10 @@ app.set('port', PORT);
 app.set('json spaces', 4);
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.get('/',function(req,res){
+  res.sendFile('/README.md');
+});
+
 app.get('/status/:responseStatus', (req, res) => {
     res.status(req.params.responseStatus);
     res.json({
