@@ -23,7 +23,7 @@ app.get('/status/:responseStatus', (req, res) => {
 });
 
 app.get('/ip', (req, res) => {
-   return res.send(req.ip);
+   return res.send(`${req.ip}\n`);
 });
 
 app.get('/health', (req, res) => {
