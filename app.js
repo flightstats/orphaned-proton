@@ -22,8 +22,12 @@ app.get('/status/:responseStatus', (req, res) => {
     });
 });
 
+app.get('/ip', (req, res) => {
+   return res.send(req.ip);
+});
+
 app.get('/health', (req, res) => {
-    res.send("OK");
+    return res.send("OK");
 });
 
 var server = app.listen(PORT, function () {
