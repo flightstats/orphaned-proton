@@ -3,8 +3,14 @@ An HTTP reflector, used for testing.
 
 ## Routes
 
-The following routes return a JSON body containing the request headers and source IP address.
+## /health
+
+Returns 200 OK
+
+## /ip
+
+Reflects back just the IP address of the calling host
 
 ## /status/{code}
 
-Returns an HTTP response with the given status code
+Returns HTTP {code} and a JSON body containing the request headers and source IP address.
