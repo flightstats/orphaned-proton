@@ -1,9 +1,11 @@
 'use strict';
 
 var express = require('express');
+var https = require('https');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-var https = require('https');
+var path = require('path');
+var marked = require('marked');
 
 var HTTPPORT = '9191';
 var HTTPSPORT = '9192';
@@ -17,6 +19,16 @@ https.createServer({
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem')
 }, app).listen(HTTPSPORT);
+
+app.get('/', function(req, res) {
+  var path = __dirname + '/README.md';
+  var file = fs.readFile(path, 'utf8', function(err, data) {
+    if(err) {
+      console.log(err);
+    }
+    res.send(marked(data.toString()));
+  });
+});
 
 app.get('/status/:responseStatus', (req, res) => {
     res.status(req.params.responseStatus);
@@ -39,6 +51,6 @@ app.get('/health', (req, res) => {
 });
 
 var server = app.listen(HTTPPORT, function () {
-    console.log("Express HTTP server listening on HTTPPORT " + app.get('HTTPPORT'));
-    console.log("Express HTTPs server listening on HTTPSPORT " + app.get('HTTPSPORT'));
+    console.log("Express HTTP server listening on: " + app.get('HTTPPORT'));
+    console.log("Express HTTPs server listening on: " + app.get('HTTPSPORT'));
 });
