@@ -3,6 +3,10 @@ An HTTP reflector, used for testing.
 
 ## Routes
 
+## GET /
+
+Returns The README.md Documentation
+
 ## GET /health
 
 Returns 200 OK
