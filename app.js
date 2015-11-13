@@ -39,5 +39,6 @@ app.get('/health', (req, res) => {
 });
 
 var server = app.listen(HTTPPORT, function () {
-    console.log("Express server listening on HTTPPORT " + app.get('HTTPPORT'));
+    console.log("Express HTTP server listening on HTTPPORT " + app.get('HTTPPORT'));
+    console.log("Express HTTPs server listening on HTTPSPORT " + app.get('HTTPSPORT'));
 });
