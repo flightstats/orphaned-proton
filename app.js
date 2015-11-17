@@ -10,6 +10,19 @@ app.set('port', PORT);
 app.set('json spaces', 4);
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.post('/status/:responseStatus', (req, res) => {
+    res.status(req.params.responseStatus);
+    res.json({
+        statusCode: parseInt(req.params.responseStatus),
+        requestHeaders: req.headers,
+        body: req.body,
+        query: req.query,
+        ip: req.ip,
+        originalUrl: req.originalUrl,
+        path: req.path
+    })
+});
+
 app.get('/status/:responseStatus', (req, res) => {
     res.status(req.params.responseStatus);
     res.json({
