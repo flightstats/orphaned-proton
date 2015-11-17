@@ -3,12 +3,19 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var PORT = '9191';
+var HTTPPORT = '9191';
+var HTTPSPORT = '9192';
 
 var app = express();
-app.set('port', PORT);
+app.set('HTTPPORT', HTTPPORT);
 app.set('json spaces', 4);
 app.use(bodyParser.urlencoded({extended: true}));
+
+// This expects a /key.pem and /cert.pem file placed in the app.js root. 
+https.createServer({
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+}, app).listen(HTTPSPORT);
 
 app.get('/status/:responseStatus', (req, res) => {
     res.status(req.params.responseStatus);
