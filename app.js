@@ -2,6 +2,8 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var marked = require('marked');
 
 var PORT = '9191';
 
@@ -9,6 +11,17 @@ var app = express();
 app.set('port', PORT);
 app.set('json spaces', 4);
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.get('/', function(req, res) {
+    var path = __dirname + '/README.md';
+    fs.readFile(path, 'utf8', function(err, data) {
+        if(err) {
+            res.status(500);
+            return res.send(err);
+        }
+        res.send(marked(data.toString()));
+    });
+});
 
 function statusResponse(req, res){
     res.status(req.params.responseStatus);
