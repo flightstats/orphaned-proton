@@ -10,9 +10,10 @@ app.set('port', PORT);
 app.set('json spaces', 4);
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.post('/status/:responseStatus', (req, res) => {
+function statusResponse(req, res){
     res.status(req.params.responseStatus);
     res.json({
+        method: req.method,
         statusCode: parseInt(req.params.responseStatus),
         requestHeaders: req.headers,
         body: req.body,
@@ -21,19 +22,11 @@ app.post('/status/:responseStatus', (req, res) => {
         originalUrl: req.originalUrl,
         path: req.path
     })
-});
+}
 
-app.get('/status/:responseStatus', (req, res) => {
-    res.status(req.params.responseStatus);
-    res.json({
-        statusCode: parseInt(req.params.responseStatus),
-        requestHeaders: req.headers,
-        ip: req.ip,
-        originalUrl: req.originalUrl,
-        path: req.path
-
-    });
-});
+app.post('/status/:responseStatus', statusResponse);
+app.put('/status/:responseStatus', statusResponse);
+app.get('/status/:responseStatus', statusResponse);
 
 app.get('/ip', (req, res) => {
    return res.send(`${req.ip}\n`);
