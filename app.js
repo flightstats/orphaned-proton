@@ -27,7 +27,19 @@ app.get('/', function (req, res) {
 
 function statusResponse(req, res) {
     res.status(req.params.responseStatus);
-    res.json({
+    res.json(standardResponse(req))
+}
+
+function timeoutResponse(req, res) {
+    let timeout = req.params.timeoutLengthMs;
+    setTimeout(() => {
+        res.status(200);
+        res.json(standardResponse(req));
+    }, timeout);
+}
+
+function standardResponse(req) {
+    return {
         method: req.method,
         statusCode: parseInt(req.params.responseStatus),
         requestHeaders: req.headers,
@@ -36,12 +48,12 @@ function statusResponse(req, res) {
         ip: req.ip,
         originalUrl: req.originalUrl,
         path: req.path
-    })
+    };
 }
 
-app.post('/status/:responseStatus', statusResponse);
-app.put('/status/:responseStatus', statusResponse);
-app.get('/status/:responseStatus', statusResponse);
+var methods = [app.get, app.post, app.put];
+methods.forEach(method => method.call(app, '/status/:responseStatus', statusResponse));
+methods.forEach(method => method.call(app, '/timeout/:timeoutLengthMs', timeoutResponse));
 
 app.get('/ip', (req, res) => {
     return res.send(`${req.ip}\n`);
