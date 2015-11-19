@@ -13,8 +13,8 @@ sudo chown -R ${APPUSER}:${APPUSER} /home/${APPUSER}/${DIR}
 sudo rm /home/${APPUSER}/orphaned-proton
 sudo ln -s /home/${APPUSER}/${DIR} /home/${APPUSER}/orphaned-proton
 
-echo Copying over SSH cert
-ssh ${DEPLOYUSER}@${HOST} sudo cp /home/${APPUSER}/key.pem /home/${APPUSER}/cert.pem /home/${APPUSER}/orphaned-proton/
+echo Copying over SSL cert
+sudo cp /home/${APPUSER}/key.pem /home/${APPUSER}/cert.pem /home/${APPUSER}/orphaned-proton/
 
 echo Installing upstart script
 sudo cp /home/${APPUSER}/${DIR}/config/orphaned-proton.conf /etc/init/
