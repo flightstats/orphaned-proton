@@ -13,6 +13,11 @@ Returns 200 OK
 
 Reflects back just the IP address of the calling host
 
-### GET /status/{code}
+### (GET | POST | PUT) /status/{code}
 
 Returns HTTP {code} and a JSON body containing the request headers and source IP address.
+
+### (GET | POST | PUT) /timeout/{timeoutMs}
+
+Delays for the given number of milliseconds before returning HTTP 200/OK and a JSON body containing the request headers and source IP address.
+
